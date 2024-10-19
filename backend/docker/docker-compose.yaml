@@ -1,0 +1,14 @@
+services:
+  postgres:
+    container_name: postgres_container_explorer
+    image: postgres:16.3-alpine3.20
+    # Untuk memulai ulang secara otomatis apabila kontainer tersebut berhenti atau gagal
+    restart: always
+    environment:
+      - POSTGRES_USER=hafiihza
+      - POSTGRES_DB=file_explorer
+      - POSTGRES_PASSWORD=farhana
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./docker-volumes/postgres:/var/lib/postgresql

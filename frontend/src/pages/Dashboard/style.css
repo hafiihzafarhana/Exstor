@@ -1,0 +1,18 @@
+/* styles.css */
+.separator {
+  cursor: ew-resize; /* Cursor berubah saat hover di separator */
+  background-color: #ccc; /* Warna separator */
+  width: 5px; /* Lebar separator */
+  height: 100%; /* Tinggi separator sesuai dengan konten */
+}
+
+ul.devi {
+  opacity: 0;
+  max-height: 0;
+  transition: opacity 0.3s ease, max-height 0.3s ease;
+}
+
+ul.open {
+  opacity: 1;
+  max-height: 500px; /* Atur sesuai kebutuhan */
+}
