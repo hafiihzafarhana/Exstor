@@ -79,3 +79,7 @@ npm run dev (Running in port 3000)
 ```
 
 ## Or export the .sql located in "db/db/file_explorer.sql"
+
+## UI
+![image](https://github.com/user-attachments/assets/0d3f69eb-977b-4d9a-88fd-7d35f608f578)
+
