@@ -6,6 +6,7 @@ export interface IItemDocument {
   type?: string;
   size?: number;
   path?: string;
+  virtual_path?: string;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;

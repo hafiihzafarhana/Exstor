@@ -4,7 +4,7 @@ import { VscRootFolder, VscRootFolderOpened } from "react-icons/vsc";
 import { getAllRoot, openFile } from "../../Service";
 import { GetAllRootResponse, SubItem } from "../../interface";
 import ModalCreate from "../../../../components/Modal/ModalCreate";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useModal } from "../../../../hooks/useModal";
 
 interface SidebarProps {
@@ -19,8 +19,14 @@ const Left: React.FC<SidebarProps> = ({ width }) => {
   const [currentFolderId, setCurrentFolderId] = useState<string | null>(null); // State untuk menyimpan folder yang sedang dibuka
   const navigate = useNavigate();
   const { triggerLeft, setTriggerLeft } = useModal();
+  const location = useLocation(); // Mendapatkan URL saat ini
 
   const openModal = () => {
+    // Jika user sudah di /explorer atau /explorer/{id}, tidak perlu navigasi lagi
+    if (!location.pathname.startsWith("/explorer")) {
+      navigate("/explorer");
+    }
+
     setIsModalOpen(true);
   };
 
@@ -42,7 +48,6 @@ const Left: React.FC<SidebarProps> = ({ width }) => {
           setSubItems([]);
           setCurrentFolderId(null);
         }
-        console.log(triggerLeft);
         setTriggerLeft(false);
       } catch (error) {
         console.error("Error fetching sub items:", error);

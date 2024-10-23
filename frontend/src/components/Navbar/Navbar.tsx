@@ -36,7 +36,7 @@ const Navbar: React.FC = () => {
         <div className="text-2xl font-bold">EXSTOR</div>
         <div className="flex space-x-4">
           <div
-            className="text-gray-600 hover:shadow-md hover:rounded-full"
+            className="text-gray-600 hover:shadow-md hover:rounded-full cursor-pointer"
             onClick={toggleDropdown}
           >
             <FaRegUserCircle size={36} />

@@ -25,3 +25,24 @@ export const updateItemDTO: ObjectSchema = Joi.object().keys({
     'string.empty': 'nama harus diisi'
   })
 });
+
+export const copyItemDTO: ObjectSchema = Joi.object().keys({
+  id: Joi.string().uuid().required().messages({
+    'string.base': 'ID harus berupa string',
+    'string.empty': 'ID harus diisi',
+    'string.uuid': 'ID harus berupa UUID yang valid'
+  })
+});
+
+export const copyItemPathDTO: ObjectSchema = Joi.object().keys({
+  item_id: Joi.string().uuid().required().messages({
+    'string.base': 'ID harus berupa string',
+    'string.empty': 'ID harus diisi',
+    'string.uuid': 'ID harus berupa UUID yang valid'
+  }),
+  parent_id: Joi.string().uuid().required().messages({
+    'string.base': 'ID harus berupa string',
+    'string.empty': 'ID harus diisi',
+    'string.uuid': 'ID harus berupa UUID yang valid'
+  })
+});

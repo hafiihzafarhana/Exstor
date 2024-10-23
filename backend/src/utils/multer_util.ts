@@ -2,18 +2,29 @@ import path from 'path';
 
 import multer from 'multer';
 
-// Konfigurasi penyimpanan untuk multer
+import { PLACE_TEMPO } from '../constant';
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/'); // Folder di mana file akan disimpan
+    cb(null, `${PLACE_TEMPO}`); // Ganti dengan path yang Anda inginkan untuk file sementara
   },
   filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9); // Menambahkan timestamp
-    cb(null, uniqueSuffix + path.extname(file.originalname)); // Menyimpan dengan nama unik
+    cb(null, file.originalname); // Gunakan nama asli file
   }
 });
 
-// Inisialisasi multer dengan konfigurasi
-const upload = multer({ storage });
+export const upload = multer({
+  storage,
+  limits: { fileSize: 10 * 1024 * 1024 }, // Batas ukuran file 10MB
+  fileFilter: (req, file, cb) => {
+    console.log('Uploaded file:', file); // Log informasi file
+    const filetypes = /jpeg|jpg|png|gif|txt|pdf|text\/plain/;
+    const mimetype = filetypes.test(file.mimetype);
+    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
 
-export { upload };
+    if (mimetype && extname) {
+      return cb(null, true);
+    }
+    cb(new Error(`Error: File upload only supports the following filetypes - ${filetypes}`));
+  }
+});

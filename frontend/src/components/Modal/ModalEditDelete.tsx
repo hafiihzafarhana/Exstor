@@ -14,7 +14,6 @@ const ModalEditDelete: React.FC<ModalEditDeleteProps> = ({
   onDelete,
   onEdit,
   onClose,
-  type,
 }) => {
   const [newName, setNewName] = useState(item ? item.name : ""); // State untuk menyimpan nama baru
 
@@ -34,36 +33,28 @@ const ModalEditDelete: React.FC<ModalEditDeleteProps> = ({
         </div>
 
         {/* Input untuk mengedit nama item */}
-        {type === "file" ? (
-          <div className="p-4">
-            <label className="block mb-2">Rename:</label>
-            <input
-              type="text"
-              value={newName}
-              onChange={(e) => setNewName(e.target.value)}
-              placeholder="New name"
-              className="border p-2 rounded w-full"
-            />
-          </div>
-        ) : (
-          ""
-        )}
+        <div className="p-4">
+          <label className="block mb-2">Rename:</label>
+          <input
+            type="text"
+            value={newName}
+            onChange={(e) => setNewName(e.target.value)}
+            placeholder="New name"
+            className="border p-2 rounded w-full"
+          />
+        </div>
 
         <div className="flex justify-between p-4 border-t">
           {/* Tombol untuk menyimpan perubahan */}
-          {type === "file" ? (
-            <button
-              onClick={() => {
-                onEdit({ name: newName as string }); // Panggil fungsi edit dengan data baru
-                onClose(); // Tutup modal setelah edit
-              }}
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-            >
-              Edit
-            </button>
-          ) : (
-            ""
-          )}
+          <button
+            onClick={() => {
+              onEdit({ name: newName as string }); // Panggil fungsi edit dengan data baru
+              onClose(); // Tutup modal setelah edit
+            }}
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          >
+            Edit
+          </button>
 
           {/* Tombol untuk menghapus item */}
           <button

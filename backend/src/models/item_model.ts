@@ -46,6 +46,10 @@ const ItemsModel: ModelDefined<IItemDocument, ItemCreationAttributes> = sqlz.def
     path: {
       type: DataTypes.TEXT,
       allowNull: false
+    },
+    virtual_path: {
+      type: DataTypes.TEXT,
+      allowNull: false
     }
   },
   {

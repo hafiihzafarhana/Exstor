@@ -61,6 +61,7 @@ export class UserControllers {
     await this.tokenService.createToken({ acc_token: token.accessToken, ref_token: token.refreshToken, user_id: result.id });
 
     const userFolderPath = path.join(__dirname, PLACE_EXPLORER, result.id as string);
+    const formattedPath = userFolderPath.replace(/\\/g, ' ');
 
     if (!fs.existsSync(userFolderPath)) {
       fs.mkdirSync(userFolderPath);
@@ -72,7 +73,8 @@ export class UserControllers {
       parent_id: null,
       name: 'root',
       type: 'folder',
-      path: userFolderPath
+      path: userFolderPath,
+      virtual_path: formattedPath
     });
 
     res.status(StatusCodes.OK).json({

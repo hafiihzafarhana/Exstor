@@ -4,7 +4,7 @@ import fs from 'fs';
 export function checkFormatFile(fileName: string): boolean {
   const spliceData = fileName.split('.');
   const checkType = spliceData[spliceData.length - 1];
-  const dt = new Set(['txt', 'xlsx', 'docx']);
+  const dt = new Set(['txt', 'xlsx', 'docx', 'pdf']);
   return dt.has(checkType) ? true : false;
 }
 
