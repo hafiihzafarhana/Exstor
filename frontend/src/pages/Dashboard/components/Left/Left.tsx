@@ -6,6 +6,7 @@ import { GetAllRootResponse, SubItem } from "../../interface";
 import ModalCreate from "../../../../components/Modal/ModalCreate";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useModal } from "../../../../hooks/useModal";
+import { generateNewToken } from "../../../../utils/generateNewToken";
 
 interface SidebarProps {
   width: number;
@@ -41,7 +42,8 @@ const Left: React.FC<SidebarProps> = ({ width }) => {
         const data: GetAllRootResponse = await getAllRoot(
           currentFolderId as string
         ); // Ambil subItems berdasarkan currentFolderId
-
+        console.log(data.token);
+        generateNewToken(data.token as string);
         if ((data.result?.length as number) > 0) {
           setSubItems(data.result as SubItem[]);
         } else {
@@ -63,9 +65,10 @@ const Left: React.FC<SidebarProps> = ({ width }) => {
     if (item.type === "file") {
       // Jika item adalah file, buka file tersebut
       openFile(item.id as string)
-        .then((response) =>
-          console.log("Response from opening file:", response)
-        )
+        .then((response: GetAllRootResponse) => {
+          console.log(response.token);
+          generateNewToken(response.token as string);
+        })
         .catch((error) => console.error("Error opening file:", error));
     } else {
       // Jika item adalah folder, set currentFolderId dan buka sub-folder

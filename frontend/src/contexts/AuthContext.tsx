@@ -51,6 +51,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     localStorage.removeItem("accessToken");
     localStorage.removeItem("username");
     localStorage.removeItem("rootId");
+    sessionStorage.removeItem("copyPath");
+
     setIsAuthenticated(false);
     setUsername(null);
     setRootId(null);

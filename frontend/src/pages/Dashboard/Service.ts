@@ -1,5 +1,8 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { http } from "../../common/constant";
+import { generateNewToken } from "../../utils/generateNewToken";
+import { GetCreateResponse } from "./interface";
+import { forceLogout } from "../../utils/forceLogout";
 
 export const getAllRoot = (id: string) => {
   const endPoint =
@@ -11,7 +14,12 @@ export const getAllRoot = (id: string) => {
         Authorization: `Bearer ${token}`, // Mengirimkan token dalam header
       },
     })
-    .then((response) => response.data);
+    .then((response) => response.data)
+    .catch((err) => {
+      if (err.response.data.status === "error_auth") {
+        forceLogout();
+      }
+    });
 };
 
 export const openFile = (id: string) => {
@@ -22,7 +30,12 @@ export const openFile = (id: string) => {
         Authorization: `Bearer ${token}`, // Mengirimkan token dalam header
       },
     })
-    .then((response) => response.data);
+    .then((response) => response.data)
+    .catch((err) => {
+      if (err.response.data.status === "error_auth") {
+        forceLogout();
+      }
+    });
 };
 
 export const openFolder = (
@@ -40,7 +53,12 @@ export const openFolder = (
         },
       }
     )
-    .then((response) => response.data);
+    .then((response) => response.data)
+    .catch((err) => {
+      if (err.response.data.status === "error_auth") {
+        forceLogout();
+      }
+    });
 };
 
 export const create = (newItem: { name: string; type: string }, id: string) => {
@@ -62,7 +80,12 @@ export const create = (newItem: { name: string; type: string }, id: string) => {
         },
       }
     )
-    .then((response) => response.data);
+    .then((response) => response.data)
+    .catch((err) => {
+      if (err.response.data.status === "error_auth") {
+        forceLogout();
+      }
+    });
 };
 
 export const onDelete = (id: string) => {
@@ -74,7 +97,12 @@ export const onDelete = (id: string) => {
         Authorization: `Bearer ${token}`, // Mengirimkan token dalam header
       },
     })
-    .then((response) => response.data);
+    .then((response) => response.data)
+    .catch((err) => {
+      if (err.response.data.status === "error_auth") {
+        forceLogout();
+      }
+    });
 };
 
 export const onUpdate = (id: string, name: string) => {
@@ -92,7 +120,12 @@ export const onUpdate = (id: string, name: string) => {
         },
       }
     )
-    .then((response) => response.data);
+    .then((response) => response.data)
+    .catch((err) => {
+      if (err.response.data.status === "error_auth") {
+        forceLogout();
+      }
+    });
 };
 
 export const fileUploader = async (id: string, file: File) => {
@@ -112,7 +145,11 @@ export const fileUploader = async (id: string, file: File) => {
     return response.data; // Mengembalikan data respons dari server
   } catch (error) {
     console.error("Error uploading file:", error);
-    throw error; // Melempar error jika ada kesalahan
+    if (error instanceof AxiosError) {
+      if (error.response?.data?.status === "error_auth") {
+        forceLogout();
+      }
+    }
   }
 };
 
@@ -131,8 +168,12 @@ export const copyItem = async (id: string) => {
 
     return response.data;
   } catch (error) {
-    console.error("Error uploading file:", error);
-    throw error;
+    console.error("Error copy item:", error);
+    if (error instanceof AxiosError) {
+      if (error.response?.data?.status === "error_auth") {
+        forceLogout();
+      }
+    }
   }
 };
 
@@ -151,15 +192,19 @@ export const copyPasteItem = async (item_id: string, parent_id: string) => {
 
     return response.data;
   } catch (error) {
-    console.error("Error uploading file:", error);
-    throw error;
+    console.error("Error copy paste item:", error);
+    if (error instanceof AxiosError) {
+      if (error.response?.data?.status === "error_auth") {
+        forceLogout();
+      }
+    }
   }
 };
 
 export const bulkDelete = async (ids: Set<string>) => {
   const token = localStorage.getItem("accessToken");
   try {
-    await axios.post(
+    const data = await axios.post(
       `${http}/items/bulk/delete`,
       { id: Array.from(ids) },
       {
@@ -168,8 +213,14 @@ export const bulkDelete = async (ids: Set<string>) => {
         },
       }
     );
+    const lasdt: GetCreateResponse = data.data;
+    generateNewToken(lasdt.token as string);
   } catch (error) {
-    console.error("Error uploading file:", error);
-    throw error;
+    console.error("Error bulk delete item:", error);
+    if (error instanceof AxiosError) {
+      if (error.response?.data?.status === "error_auth") {
+        forceLogout();
+      }
+    }
   }
 };

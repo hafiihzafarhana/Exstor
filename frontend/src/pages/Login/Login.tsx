@@ -58,7 +58,7 @@ const LoginPage: React.FC = () => {
               type="email"
               id="email"
               className="border border-gray-300 rounded w-full p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your username"
+              placeholder="Enter your email"
               required={true}
               value={email}
               onChange={(e) => setEmail(e.target.value)}

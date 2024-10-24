@@ -5,8 +5,8 @@ import { ITokenPayload } from '../infra/interfaces/token_interface';
 
 export const TODO_ACCESS_TOKEN_SECRET: Secret = todoConfig.TODO_ACCESS_TOKEN_SECRET as Secret;
 export const TODO_REFRESH_TOKEN_SECRET: Secret = todoConfig.TODO_REFRESH_TOKEN_SECRET as Secret;
-const TODO_ACCESS_TOKEN_TIME = '30d' as string;
-const TODO_REFRESH_TOKEN_TIME = '30d' as string;
+const TODO_ACCESS_TOKEN_TIME = todoConfig.TODO_ACCESS_TOKEN_TIME as string;
+const TODO_REFRESH_TOKEN_TIME = todoConfig.TODO_REFRESH_TOKEN_TIME as string;
 
 export interface CustomRequest extends Request {
   token: string | JwtPayload;

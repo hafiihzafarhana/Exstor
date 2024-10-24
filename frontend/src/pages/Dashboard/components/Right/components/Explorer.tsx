@@ -23,6 +23,7 @@ import ModalEditDelete from "../../../../../components/Modal/ModalEditDelete";
 import * as ContextMenu from "@radix-ui/react-context-menu";
 import "./redix_ui.css";
 import { FaChevronRight } from "react-icons/fa";
+import { generateNewToken } from "../../../../../utils/generateNewToken";
 
 const Explorer = () => {
   // untuk ambil id params dari url
@@ -124,7 +125,8 @@ const Explorer = () => {
           sortBy,
           sortDirection
         );
-
+        console.log(data.token);
+        generateNewToken(data.token as string);
         setSubItems(data.result as SubItem[]);
       } catch (error) {
         console.error("Error fetching sub items:", error);
@@ -145,7 +147,8 @@ const Explorer = () => {
         { name: newItem.name, type: newItem.type },
         parentId
       ); // Menggunakan service create
-
+      console.log(createdItem.token);
+      generateNewToken(createdItem.token as string);
       // Pastikan result ada dan memiliki tipe SubItem
       return createdItem.result as SubItem; // Cast ke SubItem jika perlu
     } catch (error) {
@@ -183,7 +186,8 @@ const Explorer = () => {
   const handleUpdateItem = async (itemId: string, newName: string) => {
     try {
       const updatedItem: GetCreateResponse = await onUpdate(itemId, newName); // Memanggil API atau service untuk update
-
+      console.log(updatedItem.token);
+      generateNewToken(updatedItem.token as string);
       if (id === undefined) {
         setTriggerLeft(true);
       }
@@ -202,8 +206,8 @@ const Explorer = () => {
 
   const handleDeleteItem = async (itemId: string) => {
     try {
-      await onDelete(itemId); // Fungsi API untuk menghapus item
-
+      const deleteData: GetCreateResponse = await onDelete(itemId); // Fungsi API untuk menghapus item
+      generateNewToken(deleteData.token as string);
       if (id === undefined) {
         setTriggerLeft(true);
       }
@@ -270,6 +274,8 @@ const Explorer = () => {
           parentId,
           files[0]
         );
+        console.log(createdItem.token);
+        generateNewToken(createdItem.token as string);
         if (id === undefined) {
           setTriggerLeft(true);
         }
@@ -294,7 +300,8 @@ const Explorer = () => {
       const createdItem: GetCreateResponse = await copyItem(
         subItemDetect.id as string
       );
-
+      console.log(createdItem.token);
+      generateNewToken(createdItem.token as string);
       setTriggerLeft(true);
 
       // // Perbarui state dengan memeriksa tipe
@@ -317,6 +324,8 @@ const Explorer = () => {
           copyPathJson as string,
           parentId as string
         );
+        console.log(createdItem.token);
+        generateNewToken(createdItem.token as string);
         setTriggerLeft(true);
 
         // // Perbarui state dengan memeriksa tipe
