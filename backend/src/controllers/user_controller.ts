@@ -17,9 +17,9 @@ import { ItemService } from '../services/item_service';
 import { PLACE_EXPLORER } from '../constant';
 
 export class UserControllers {
-  private authService: UserService;
-  private tokenService: TokenService;
-  private itemService: ItemService;
+  public authService: UserService;
+  public tokenService: TokenService;
+  public itemService: ItemService;
   constructor() {
     this.authService = new UserService();
     this.tokenService = new TokenService();
@@ -77,7 +77,7 @@ export class UserControllers {
       virtual_path: formattedPath
     });
 
-    res.status(StatusCodes.OK).json({
+    res.status(StatusCodes.CREATED).json({
       msg: 'User was created',
       status: StatusCodes.CREATED,
       result: { ...result, root_id: uuidNew },

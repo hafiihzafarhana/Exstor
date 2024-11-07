@@ -42,13 +42,13 @@ class ConfigData {
 
 export const todoConfig: ConfigData = new ConfigData();
 
-export function cloudinaryConfig(): void {
+export async function cloudinaryConfig(): Promise<void> {
   cloudinary.v2.config({
     cloud_name: todoConfig.TODO_CLOUDINARY_NAME,
     api_key: todoConfig.TODO_CLOUDINARY_API_KEY,
     api_secret: todoConfig.TODO_CLOUDINARY_API_SECRET
   });
-  checkCloudinary();
+  await checkCloudinary();
 }
 
 export async function checkCloudinary(): Promise<void> {
